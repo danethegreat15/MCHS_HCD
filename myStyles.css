@@ -1,0 +1,258 @@
+@font-face {
+    font-family: annabel;
+    src: url("Vintage.otf");
+}
+font{
+  font-size: 30px;
+}
+
+body 
+{
+	background-image: url("SJkkVGI.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	font-family: 'Trebuchet MS', sans-serif;
+	font-size: 20px;
+	color:white;
+}
+h1
+{
+	font-family: 'Trebuchet MS', sans-serif;
+	font-size: 45px;
+	text-align: center;
+	color:white;
+	transition: all 0.4s ease-in-out;
+
+}
+
+.h1grow:hover {
+  -ms-transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2); 
+  transition-duration: .4s;
+}
+
+p
+{
+	transition: all 0.5s ease-in-out;
+}
+
+.textWarning 
+{
+	text-align: center;
+	font-size: 25px;
+	color:red;
+}
+
+
+.button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #590032;
+  border: 2px solid #353535;
+  color: #ffffff;
+  text-align: center;
+  font-family: 'Trebuchet MS', sans-serif;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 1px;
+}
+
+.button1{
+  height: 35px;
+  width: 125px;
+  font-size: 20px;
+}
+
+.button2{
+  height: 30px;
+  width: 225px;
+  padding-top: 5px;
+  font-size: 20px;
+}
+
+.button3{
+  height: 30px;
+  width: 225px;
+  padding-top: 8px;
+  padding-left: 18px;
+  padding-right: 18px;
+  font-size: 19px;
+}
+
+.button4{
+  height: 35px;
+  width: 125px;
+  font-size: 20px;
+  position: relative;
+  top: 7px;
+}
+
+.button5{
+  height: 35px;
+  width: 125px;
+  font-size: 20px;
+  position: relative;
+  top: 13px;
+}
+
+.button6{
+  border: none;
+  height: 27px;
+  width: 70px;
+  font-size: 14px;
+  position: relative;
+  top: 7px;
+  
+}
+.buttonEdit{
+  border: none;
+  height: 27px;
+  width: 70px;
+  font-size: 14px;
+  position: relative;
+  top: 7px;
+  
+}
+
+.buttonReply{
+  border: none;
+  height: 27px;
+  width: 70px;
+  font-size: 14px;
+  position: relative;
+  top: 7px;
+  left: 0px;
+}
+.buttonTemp{
+  position: relative;
+}
+
+.buttonLogout{
+  height: 30px;
+  width: 90px;
+  font-size: 15px;
+  position: absolute;
+  right: 2%;
+  top: 7%;
+}
+
+.buttonSettings{
+  height: 30px;
+  width: 90px;
+  font-size: 15px;
+  position: absolute;
+  right: 2%;
+  top: 2%;
+}
+.buttonBack{
+  height: 30px;
+  width: 90px;
+  font-size: 15px;
+  position: absolute;
+  right: 2%;
+  top: 2%;
+}
+.buttonChangeQueue{
+  height: 30px;
+  width: 120px;
+  font-size: 15px;
+  position: absolute;
+  right: 2%;
+  top: 2%;
+}
+.buttonCreateQueue{
+  height: 35px;
+  width: 125px;
+  font-size: 15px;
+  position: relative;
+  top: 7px;
+  left: 135px;
+  
+}
+.buttonCreateCode{
+  height: 35px;
+  width: 125px;
+  font-size: 15px;
+  position: relative;
+  top: 7px;
+  right: 135px;
+}
+
+.button:hover {
+    background-color: #910152; 
+    color: #ffffff;
+    transition-duration: 0.5s;
+}
+
+a {
+	text-decoration:none;
+}
+
+.styled-select.slate select {
+   border: none;
+   font-family: 'Trebuchet MS', sans-serif;
+   font-size: 20px;
+   
+}
+.tZone{
+  height: 30px;
+   width: 160px;
+}
+.rightSelect {
+  height: 30px;
+  width: auto;
+}
+
+input{
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: 20px;
+  text-align: center;
+  position: relative;
+  left: 5px;
+}
+
+
+.fieldset{
+  border:2px solid black;
+}
+
+.center{
+  line-height: 57px;
+  height: 50px;
+}
+
+table {
+  border-collapse: collapse;
+  text-align: left;
+  background-color: #353535;
+
+}
+th{
+    padding: 12px;
+    text-align: left;
+    font-size: 24px;
+    width: 25%;
+}
+
+td{
+    padding: 12px;
+    font-size: 24px;
+    
+}
+
+.original_post{
+  background-color: #353535;
+}
+.original_post:hover{
+  background-color: #777777;
+}
+
+.reply_post{
+  background-color: #444444;
+}
+.reply_post:hover{
+  background-color: #777777;
+}
+
+

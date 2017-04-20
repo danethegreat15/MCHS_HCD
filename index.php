@@ -9,6 +9,8 @@ if (isset($_POST['logout']))
 	session_destroy();
 	header('Location: ../HelloWorld/login.php');
 	exit;
+	//TEST
+	//TEST
 }
 // *********** DEBUGGING STUFF ***********
 	$DEBUG = getDebugState();

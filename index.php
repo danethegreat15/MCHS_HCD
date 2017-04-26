@@ -10,6 +10,7 @@ if (isset($_POST['logout']))
 	header('Location: ../HelloWorld/login.php');
 	exit;
 	//TEST
+	//DID THIS WORK?
 	//TEST
 }
 // *********** DEBUGGING STUFF ***********

@@ -221,9 +221,9 @@ else
 		$current_queue_id = $_SESSION['current_queue_id'];
 		$userRecord = getUserRecord($_SESSION['userID'], $DBH);
 		debug('$userRecord',$userRecord);
-		$QUEUES = $userRecord['queues'];
+		$Queues = $userRecord['queues'];
 		
-		$currentQueue = $QUEUES[$current_queue_id];
+		$currentQueue = $Queues[$current_queue_id];
 		$joinCode = $currentQueue['join_code'];
 
 		$sql = "SELECT post.*, user.screen_name FROM post LEFT JOIN user ON post.user_id = user.id WHERE queue_id = :queue_id ORDER BY reply_id, date_time";
@@ -523,7 +523,7 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 	<br>
 	
     <?php
-	    if(count($QUEUES) > 0)
+	    if(count($Queues) > 0)
 	    {
 	    	echo '<p class="queueChange">';
 			echo '<form action="" method="POST">';
@@ -538,7 +538,7 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 			
 		    $current_queue = query($DBH, $sql, $data);
 	
-			foreach ($QUEUES as $key => $value)
+			foreach ($Queues as $key => $value)
 			{
 				$temp = $value['queue_id'];
 				if($current_queue[0]['id'] == $temp)

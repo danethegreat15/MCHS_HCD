@@ -643,7 +643,7 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 			$name = "post";
 			$value = '';
 			$cancelButton = "";
-			$displayValue = "";
+			$display_value = "";
 			if (isset($_SESSION['edit_post']))
 			{
 				$postID = $_SESSION['edit_post'];
@@ -668,12 +668,12 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 				{
 					if ($postID == $post['id'])
 					{
-						$displayValue = h($post['post_text']);
+						$display_value = h($post['post_text']);
 					}
 				}
 				$cancelButton = "<button name='Cancel' class='button button5' style='vertical-align:middle'>Cancel</button>";
 			}
-			$html = "$displayValue".'<br>'.PHP_EOL;
+			$html = "$display_value".'<br>'.PHP_EOL;
 			$html.= "<form action='' method='POST'>".PHP_EOL;
 			$html.= $formTitle."<br>".PHP_EOL;
 			$html.= "<input type='text' name='$name' value='$value'>"."<br>".PHP_EOL;

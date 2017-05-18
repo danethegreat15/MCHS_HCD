@@ -642,7 +642,7 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 			$formTitle = "Post:";
 			$name = "post";
 			$value = '';
-			$cancelButton = "";
+			$cancel_button = "";
 			$displayValue = "";
 			if (isset($_SESSION['edit_post']))
 			{
@@ -656,7 +656,7 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 						$value = h($post['post_text']);
 					}
 				}
-				$cancelButton = "<button name='Cancel' class='button button5' style='vertical-align:middle'>Cancel</button>";
+				$cancel_button = "<button name='Cancel' class='button button5' style='vertical-align:middle'>Cancel</button>";
 			}
 			
 			else if (isset($_SESSION['reply_post']))
@@ -671,7 +671,7 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 						$displayValue = h($post['post_text']);
 					}
 				}
-				$cancelButton = "<button name='Cancel' class='button button5' style='vertical-align:middle'>Cancel</button>";
+				$cancel_button = "<button name='Cancel' class='button button5' style='vertical-align:middle'>Cancel</button>";
 			}
 			$html = "$displayValue".'<br>'.PHP_EOL;
 			$html.= "<form action='' method='POST'>".PHP_EOL;
@@ -679,7 +679,7 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 			$html.= "<input type='text' name='$name' value='$value'>"."<br>".PHP_EOL;
 			$html.= "<input type='submit' value='Submit' class='button button4' style='vertical-align:middle'>".PHP_EOL;
 			$html.= "</form>".PHP_EOL;
-			$html.= "<form action='' method='POST'>".$cancelButton."</form>".PHP_EOL;
+			$html.= "<form action='' method='POST'>".$cancel_button."</form>".PHP_EOL;
 			echo $html;
 			}
 		?>

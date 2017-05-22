@@ -31,10 +31,10 @@ $QUEUE_PRIVILEGE = getQueuePrivilege($DBH);
 function getJoinCode()
 {
 	global $DBH;
-	$seed = str_split('ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+	$code = str_split('ABCDEFGHIJKLMNOPQRSTUVWXYZ'
                 //.'abcdefghijklmnopqrstuvwxyz'
                 .'0123456789'); // and any other characters
-	shuffle($seed); // probably optional since array_is randomized; this may be redundant
+	shuffle($code); // probably optional since array_is randomized; this may be redundant
 	$rand = '';
 	foreach (array_rand($seed, 6) as $k) $rand .= $seed[$k];
 	

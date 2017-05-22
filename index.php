@@ -10,6 +10,7 @@ if (isset($_POST['logout']))
 	header('Location: ../HelloWorld/login.php');
 	exit;
 	//TEST
+	//DID THIS WORK?
 	//TEST
 }
 // *********** DEBUGGING STUFF ***********
@@ -18,7 +19,7 @@ if (isset($_POST['logout']))
 	if (count($_REQUEST) > 0) $_SESSION['LAST_REQUEST'] = $_REQUEST;
 	debug('$_POST', $_POST);
 	debug('$_SESSION', $_SESSION);
-	//test
+	//test again 
 	
 	
 // *********** DATABASE PRE-LOADING ***********
@@ -30,10 +31,10 @@ $QUEUE_PRIVILEGE = getQueuePrivilege($DBH);
 function getJoinCode()
 {
 	global $DBH;
-	$seed = str_split('ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+	$code = str_split('ABCDEFGHIJKLMNOPQRSTUVWXYZ'
                 //.'abcdefghijklmnopqrstuvwxyz'
                 .'0123456789'); // and any other characters
-	shuffle($seed); // probably optional since array_is randomized; this may be redundant
+	shuffle($code); // probably optional since array_is randomized; this may be redundant
 	$rand = '';
 	foreach (array_rand($seed, 6) as $k) $rand .= $seed[$k];
 	
@@ -61,10 +62,10 @@ if (isset($_SESSION['userID']) && isset($_POST['post']))
 	$current_queue_id = $_SESSION['current_queue_id'];
 
 	// We will INSERT into the post table.
-	$sql = "INSERT INTO post(user_id, post_text, queue_id) VALUES(:user_id, :post_text, :queue_id)";
+	$sql = "INSERT INTO post(user_id, PostText, queue_id) VALUES(:user_id, :PostText, :queue_id)";
 
 	// Now we match the keys to the values
-	$data = array("user_id" => $userID,"post_text" => $post, "queue_id" => $current_queue_id);
+	$data = array("user_id" => $userID,"PostText" => $post, "queue_id" => $current_queue_id);
 					
 	// And finally call our query function again...
 	query($DBH, $sql, $data);
@@ -321,10 +322,10 @@ if(isset($_POST['edited_post']) && isset($_SESSION['userID']) && isset($_SESSION
 {
 	$userID = $_SESSION['userID'];
 	
-	$sql = "UPDATE post SET post_text=:post_text WHERE id=:postID AND user_id=$userID";
+	$sql = "UPDATE post SET PostText=:PostText WHERE id=:postID AND user_id=$userID";
 					
 	// Now we match the keys to the values
-	$data = array("post_text" => $_POST['edited_post'], "postID" => $_SESSION['edit_post']);
+	$data = array("PostText" => $_POST['edited_post'], "postID" => $_SESSION['edit_post']);
 					
 	// And finally call our query function again...
 	query($DBH, $sql, $data);
@@ -362,10 +363,10 @@ if (isset($_SESSION['userID']) && isset($_POST['reply_to_post']))
 	$current_queue_id = $_SESSION['current_queue_id'];
 
 	// We will INSERT into the post table.
-	$sql = "INSERT INTO post(user_id, post_text, reply_id, queue_id) VALUES(:user_id, :post_text, :reply_id, :queue_id)";
+	$sql = "INSERT INTO post(user_id, PostText, reply_id, queue_id) VALUES(:user_id, :PostText, :reply_id, :queue_id)";
 
 	// Now we match the keys to the values
-	$data = array("user_id" => $userID,"post_text" => $post, "reply_id" => $replyID, "queue_id" => $current_queue_id);
+	$data = array("user_id" => $userID,"PostText" => $post, "reply_id" => $replyID, "queue_id" => $current_queue_id);
 					
 	// And finally call our query function again...
 	query($DBH, $sql, $data);
@@ -493,9 +494,9 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 }
 
 	
-	$timezone = $userRecord['time_zone'];
+	$timeZone = $userRecord['time_zone'];
 	$screen_name = $userRecord['screen_name'];
-	date_default_timezone_set($timezone);
+	date_default_timezone_set($timeZone);
 ?>
 <!-- *********** MODIFY HTML *********** -->
 <!DOCTYPE html>
@@ -603,27 +604,33 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 
 						$pDate = $post['date_time'];
 						$changetime = new DateTime($pDate, new DateTimeZone('UTC'));
-						$changetime->setTimezone(new DateTimeZone($timezone));
+						$changetime->setTimezone(new DateTimeZone($timeZone));
 						$pDate = $changetime->format('D, d M Y h:i A');
 						echo "<td>$pDate</td>".PHP_EOL;
 						$pPoster = h($post['screen_name']);
 						echo "<td>$pPoster</td>".PHP_EOL;
-						$postText = h($post['post_text']);
+						$postText = h($post['PostText']);
 						$posterID = $post['user_id'];
 						$postID = $post['id'];
 						$replyID = $post['reply_id'];
 						$postTextButtons = "";
 						$postTextButtons.= "<br>";
 						$postTextButtons.= "<form action='' method='POST'>".PHP_EOL;
-						if($postID == $replyID) 
+						if($postID == $replyID && hasPerm($QUEUE_PRIVILEGE['reply_both']['value'], $currentPrivilege))
 						{
-							$postTextButtons.= "<button name='reply_post' class='button buttonReply'";
-							$postTextButtons.= " value='$postID'>Reply</button>";
+							if (hasPerm($QUEUE_PRIVILEGE['delete_own']['value'], $currentPrivilege))
+							{
+								$postTextButtons.= "<button name='reply_post' class='button buttonReply'";
+								$postTextButtons.= " value='$postID'>Reply</button>";
+							}
 						}
-						if ($posterID == $_SESSION['userID'])
+						if ($posterID == $_SESSION['userID'] && hasPerm($QUEUE_PRIVILEGE['delete_own']['value'], $currentPrivilege))
 						{
 							$postTextButtons.= "<button name='delete_post' class='button button6'";
 							$postTextButtons.= " value='$postID'>Delete</button>";
+						}
+						if ($posterID == $_SESSION['userID'] && hasPerm($QUEUE_PRIVILEGE['edit_own']['value'], $currentPrivilege))
+						{
 							$postTextButtons.= "<button name='edit_post' class='button button6'";
 							$postTextButtons.= " value='$postID'>Edit</button>".PHP_EOL;
 						}
@@ -642,8 +649,10 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 			$formTitle = "Post:";
 			$name = "post";
 			$value = '';
+
 			$cancel_button = "";
 			$displayValue = "";
+
 			if (isset($_SESSION['edit_post']))
 			{
 				$postID = $_SESSION['edit_post'];
@@ -653,7 +662,7 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 				{
 					if (($postID == $post['id']) && ($_SESSION['userID'] == $post['user_id']))
 					{
-						$value = h($post['post_text']);
+						$value = h($post['PostText']);
 					}
 				}
 				$cancel_button = "<button name='Cancel' class='button button5' style='vertical-align:middle'>Cancel</button>";
@@ -668,12 +677,12 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 				{
 					if ($postID == $post['id'])
 					{
-						$displayValue = h($post['post_text']);
+						$display_value = h($post['post_text']);
 					}
 				}
 				$cancel_button = "<button name='Cancel' class='button button5' style='vertical-align:middle'>Cancel</button>";
 			}
-			$html = "$displayValue".'<br>'.PHP_EOL;
+			$html = "$display_value".'<br>'.PHP_EOL;
 			$html.= "<form action='' method='POST'>".PHP_EOL;
 			$html.= $formTitle."<br>".PHP_EOL;
 			$html.= "<input type='text' name='$name' value='$value'>"."<br>".PHP_EOL;
@@ -682,6 +691,7 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 			$html.= "<form action='' method='POST'>".$cancel_button."</form>".PHP_EOL;
 			echo $html;
 			}
+			
 		?>
 		</div>
 	</p>

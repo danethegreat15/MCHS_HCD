@@ -79,9 +79,16 @@
 	{
 		try
 		{
-			$database = 'mysql:dbname=hello;host-localhost';
+			/* Git Group must coordinate exporting the database into the project
+			 * so that each user can create their local copy.
+			 * Then the group needs to research how to keep the dababase
+			 * in sync with the Master
+			*/
+			$database = 'mysql:dbname=hello;host=localhost';
 			$dbUSer = 'hello';
 			$dbPassword = '0ff$pr!nG';
+		/*	$dbPassword = 'the quik brown fox jumps over the lazy dog';*/
+
 			$DBH = new PDO($database, $dbUSer, $dbPassword);
 			
 			/* To protect the SQL Database against Injection attacks, we also
@@ -135,5 +142,11 @@
 		}
 		return $QUEUE_PRIVILEGE;	
 	}
-
+	/* Call this function with a required permission value and the user's actual
+	 * permission value to determine if they have the required permission
+	 */
+	function hasPerm($requiredPermision, $userPermission)
+	{
+		return ((int)$requiredPermision & (int)$userPermission) > 0;
+	}
 ?>

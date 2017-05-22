@@ -86,10 +86,8 @@
 			*/
 			$database = 'mysql:dbname=hello;host=localhost';
 			$dbUSer = 'hello';
-			/*
 			$dbPassword = '0ff$pr!nG';
-			*/
-			$dbPassword = 'the quik brown fox jumps over the lazy dog';
+		/*	$dbPassword = 'the quik brown fox jumps over the lazy dog';*/
 
 			$DBH = new PDO($database, $dbUSer, $dbPassword);
 			

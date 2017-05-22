@@ -62,10 +62,10 @@ if (isset($_SESSION['userID']) && isset($_POST['post']))
 	$current_queue_id = $_SESSION['current_queue_id'];
 
 	// We will INSERT into the post table.
-	$sql = "INSERT INTO post(user_id, post_text, queue_id) VALUES(:user_id, :post_text, :queue_id)";
+	$sql = "INSERT INTO post(user_id, PostText, queue_id) VALUES(:user_id, :PostText, :queue_id)";
 
 	// Now we match the keys to the values
-	$data = array("user_id" => $userID,"post_text" => $post, "queue_id" => $current_queue_id);
+	$data = array("user_id" => $userID,"PostText" => $post, "queue_id" => $current_queue_id);
 					
 	// And finally call our query function again...
 	query($DBH, $sql, $data);
@@ -322,10 +322,10 @@ if(isset($_POST['edited_post']) && isset($_SESSION['userID']) && isset($_SESSION
 {
 	$userID = $_SESSION['userID'];
 	
-	$sql = "UPDATE post SET post_text=:post_text WHERE id=:postID AND user_id=$userID";
+	$sql = "UPDATE post SET PostText=:PostText WHERE id=:postID AND user_id=$userID";
 					
 	// Now we match the keys to the values
-	$data = array("post_text" => $_POST['edited_post'], "postID" => $_SESSION['edit_post']);
+	$data = array("PostText" => $_POST['edited_post'], "postID" => $_SESSION['edit_post']);
 					
 	// And finally call our query function again...
 	query($DBH, $sql, $data);
@@ -363,10 +363,10 @@ if (isset($_SESSION['userID']) && isset($_POST['reply_to_post']))
 	$current_queue_id = $_SESSION['current_queue_id'];
 
 	// We will INSERT into the post table.
-	$sql = "INSERT INTO post(user_id, post_text, reply_id, queue_id) VALUES(:user_id, :post_text, :reply_id, :queue_id)";
+	$sql = "INSERT INTO post(user_id, PostText, reply_id, queue_id) VALUES(:user_id, :PostText, :reply_id, :queue_id)";
 
 	// Now we match the keys to the values
-	$data = array("user_id" => $userID,"post_text" => $post, "reply_id" => $replyID, "queue_id" => $current_queue_id);
+	$data = array("user_id" => $userID,"PostText" => $post, "reply_id" => $replyID, "queue_id" => $current_queue_id);
 					
 	// And finally call our query function again...
 	query($DBH, $sql, $data);
@@ -609,7 +609,7 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 						echo "<td>$pDate</td>".PHP_EOL;
 						$pPoster = h($post['screen_name']);
 						echo "<td>$pPoster</td>".PHP_EOL;
-						$postText = h($post['post_text']);
+						$postText = h($post['PostText']);
 						$posterID = $post['user_id'];
 						$postID = $post['id'];
 						$replyID = $post['reply_id'];
@@ -660,7 +660,7 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 				{
 					if (($postID == $post['id']) && ($_SESSION['userID'] == $post['user_id']))
 					{
-						$value = h($post['post_text']);
+						$value = h($post['PostText']);
 					}
 				}
 				$cancelButton = "<button name='Cancel' class='button button5' style='vertical-align:middle'>Cancel</button>";
@@ -675,7 +675,7 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 				{
 					if ($postID == $post['id'])
 					{
-						$displayValue = h($post['post_text']);
+						$displayValue = h($post['PostText']);
 					}
 				}
 				$cancelButton = "<button name='Cancel' class='button button5' style='vertical-align:middle'>Cancel</button>";

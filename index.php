@@ -615,15 +615,21 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 						$postTextButtons = "";
 						$postTextButtons.= "<br>";
 						$postTextButtons.= "<form action='' method='POST'>".PHP_EOL;
-						if($postID == $replyID) 
+						if($postID == $replyID && hasPerm($QUEUE_PRIVILEGE['reply_both']['value'], $currentPrivilege))
 						{
-							$postTextButtons.= "<button name='reply_post' class='button buttonReply'";
-							$postTextButtons.= " value='$postID'>Reply</button>";
+							if (hasPerm($QUEUE_PRIVILEGE['delete_own']['value'], $currentPrivilege))
+							{
+								$postTextButtons.= "<button name='reply_post' class='button buttonReply'";
+								$postTextButtons.= " value='$postID'>Reply</button>";
+							}
 						}
-						if ($posterID == $_SESSION['userID'])
+						if ($posterID == $_SESSION['userID'] && hasPerm($QUEUE_PRIVILEGE['delete_own']['value'], $currentPrivilege))
 						{
 							$postTextButtons.= "<button name='delete_post' class='button button6'";
 							$postTextButtons.= " value='$postID'>Delete</button>";
+						}
+						if ($posterID == $_SESSION['userID'] && hasPerm($QUEUE_PRIVILEGE['edit_own']['value'], $currentPrivilege))
+						{
 							$postTextButtons.= "<button name='edit_post' class='button button6'";
 							$postTextButtons.= " value='$postID'>Edit</button>".PHP_EOL;
 						}
@@ -682,6 +688,7 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 			$html.= "<form action='' method='POST'>".$cancelButton."</form>".PHP_EOL;
 			echo $html;
 			}
+			
 		?>
 		</div>
 	</p>

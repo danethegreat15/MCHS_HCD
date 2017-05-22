@@ -494,9 +494,9 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 }
 
 	
-	$timezone = $userRecord['time_zone'];
+	$timeZone = $userRecord['time_zone'];
 	$screen_name = $userRecord['screen_name'];
-	date_default_timezone_set($timezone);
+	date_default_timezone_set($timeZone);
 ?>
 <!-- *********** MODIFY HTML *********** -->
 <!DOCTYPE html>
@@ -604,7 +604,7 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 
 						$pDate = $post['date_time'];
 						$changetime = new DateTime($pDate, new DateTimeZone('UTC'));
-						$changetime->setTimezone(new DateTimeZone($timezone));
+						$changetime->setTimezone(new DateTimeZone($timeZone));
 						$pDate = $changetime->format('D, d M Y h:i A');
 						echo "<td>$pDate</td>".PHP_EOL;
 						$pPoster = h($post['screen_name']);

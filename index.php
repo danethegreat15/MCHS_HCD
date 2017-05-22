@@ -10,6 +10,7 @@ if (isset($_POST['logout']))
 	header('Location: ../HelloWorld/login.php');
 	exit;
 	//TEST
+	//DID THIS WORK?
 	//TEST
 }
 // *********** DEBUGGING STUFF ***********
@@ -18,7 +19,7 @@ if (isset($_POST['logout']))
 	if (count($_REQUEST) > 0) $_SESSION['LAST_REQUEST'] = $_REQUEST;
 	debug('$_POST', $_POST);
 	debug('$_SESSION', $_SESSION);
-	//test
+	//test again 
 	
 	
 // *********** DATABASE PRE-LOADING ***********

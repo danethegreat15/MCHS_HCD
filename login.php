@@ -1,6 +1,6 @@
 <?php
 	require_once("myFunctions.php");
-	session_name("helloWorldSession");
+	session_name("qSourceSession");
 	session_start();
 	// ***************** Debugging Stuff *************************
 	$DEBUG = getDebugState();
@@ -41,7 +41,7 @@
 	?>
 	<br>
 	<fieldset class='center'>
-    <form action="../HelloWorld/" method="POST">
+    <form action="../" method="POST">
         <input type = "hidden" name = "login" value = "login">
 	    Email:
 	        <input type="email" name="username" required = "required" <?php echo $usernameAttributeValue;?>>

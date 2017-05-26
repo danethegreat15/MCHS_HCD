@@ -1,13 +1,13 @@
 <?php
 require_once("myFunctions.php");
 
-session_name("helloWorldSession");
+session_name("qSourceSession");
 session_start();
 
 if (isset($_POST['logout']))
 {
 	session_destroy();
-	header('Location: ../HelloWorld/login.php');
+	header('Location: ../login.php');
 	exit;
 	//TEST
 	//DID THIS WORK?
@@ -62,10 +62,10 @@ if (isset($_SESSION['userID']) && isset($_POST['post']))
 	$current_queue_id = $_SESSION['current_queue_id'];
 
 	// We will INSERT into the post table.
-	$sql = "INSERT INTO post(user_id, PostText, queue_id) VALUES(:user_id, :PostText, :queue_id)";
+	$sql = "INSERT INTO post(user_id, post_text, queue_id) VALUES(:user_id, :post_text, :queue_id)";
 
 	// Now we match the keys to the values
-	$data = array("user_id" => $userID,"PostText" => $post, "queue_id" => $current_queue_id);
+	$data = array("user_id" => $userID,"post_text" => $post, "queue_id" => $current_queue_id);
 					
 	// And finally call our query function again...
 	query($DBH, $sql, $data);
@@ -74,8 +74,7 @@ if (isset($_SESSION['userID']) && isset($_POST['post']))
 	$sql = "UPDATE post SET reply_id = $lastID WHERE id = $lastID";
 	$data = array();
 	query($DBH, $sql, $data);
-	
-	header('Location: ../HelloWorld/');
+	header('Location: ../');
 	exit;
 }
 
@@ -94,7 +93,7 @@ if(isset($_SESSION['userID']) && isset($_POST["screen_name"]) && isset($_POST["t
 				
 	// And finally call our query function again...
 	query($DBH, $sql, $data);
-	header('Location: ../HelloWorld/');
+	header('Location: ../');
 	exit;
 }
 
@@ -159,7 +158,7 @@ if(isset($_POST['register']) && isset($_POST['password']) && isset($_POST['passw
 	{
 		debug('$loginProblem',$loginProblem);
 		$_SESSION['loginProblem'] = $loginProblem;
-		header('Location: ../HelloWorld/register.php');
+		header('Location: ../register.php');
 		exit;
 			
 	}
@@ -192,7 +191,7 @@ if((isset($_POST['login']) || isset($_POST['register'])) && isset($_POST['passwo
 		else
 		{//passwords match
 			$_SESSION['userID'] = $rows[0]['id'];
-			header('Location: http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']); 
+			header('Location: ../'); 
 			die; 
 		}
 	
@@ -211,7 +210,7 @@ if((isset($_POST['login']) || isset($_POST['register'])) && isset($_POST['passwo
 	{
 		debug('$loginProblem',$loginProblem);
 		$_SESSION['loginProblem'] = $loginProblem;
-		header('Location: ../HelloWorld/login.php'); 
+		header('Location: ../login.php'); 
 		exit;
 	}
 }
@@ -225,6 +224,7 @@ else
 		$QUEUES = $userRecord['queues'];
 		
 		$currentQueue = $QUEUES[$current_queue_id];
+		$currentPrivilege = $QUEUES[$current_queue_id]['privilege'];
 		$joinCode = $currentQueue['join_code'];
 
 		$sql = "SELECT post.*, user.screen_name FROM post LEFT JOIN user ON post.user_id = user.id WHERE queue_id = :queue_id ORDER BY reply_id, date_time";
@@ -235,7 +235,10 @@ else
 	else
 	{ // If no previous userRecord is set then redirect to login page
 		session_destroy();
-		header('Location: ../HelloWorld/login.php');
+		$temp = 'Location: ../login.php';
+		//echo $temp;
+		//exit;
+		header($temp);
 		exit;
 	}
 }
@@ -265,7 +268,7 @@ if(isset($_POST['delete_post']) && isset($_SESSION['userID']))
 		// And finally call our query function again...
 		query($DBH, $sql, $data);
 		unset($_SESSION['edit_post']);
-		header('Location: ../HelloWorld/');
+		header('Location: ../');
 		exit;
 	}
 	else
@@ -277,7 +280,7 @@ if(isset($_POST['delete_post']) && isset($_SESSION['userID']))
 	{
 		debug('$errorMessage',$errorMessage);
 		$_SESSION['errorMessage'] = $errorMessage;
-		header('Location: ../HelloWorld/'); 
+		header('Location: ../'); 
 		exit;
 	}
 }
@@ -301,7 +304,7 @@ if (isset($_SESSION['userID']) && isset($_POST['edit_post']))
 	{
 		$_SESSION['edit_post'] = $_POST['edit_post'];
 		unset($_SESSION['reply_post']);
-		header('Location: ../HelloWorld/');
+		header('Location: ../');
 		exit;
 	}
 	else
@@ -313,7 +316,7 @@ if (isset($_SESSION['userID']) && isset($_POST['edit_post']))
 	{
 		debug('$errorMessage',$errorMessage);
 		$_SESSION['errorMessage'] = $errorMessage;
-		header('Location: ../HelloWorld/'); 
+		header('Location: ../'); 
 		exit;
 	}
 }
@@ -322,15 +325,15 @@ if(isset($_POST['edited_post']) && isset($_SESSION['userID']) && isset($_SESSION
 {
 	$userID = $_SESSION['userID'];
 	
-	$sql = "UPDATE post SET PostText=:PostText WHERE id=:postID AND user_id=$userID";
+	$sql = "UPDATE post SET post_text=:post_text WHERE id=:postID AND user_id=$userID";
 					
 	// Now we match the keys to the values
-	$data = array("PostText" => $_POST['edited_post'], "postID" => $_SESSION['edit_post']);
+	$data = array("post_text" => $_POST['edited_post'], "postID" => $_SESSION['edit_post']);
 					
 	// And finally call our query function again...
 	query($DBH, $sql, $data);
 	unset($_SESSION['edit_post']);
-	header('Location: ../HelloWorld/');
+	header('Location: ../');
 	exit;
 }
 
@@ -339,7 +342,7 @@ if(isset($_SESSION['userID']) && isset($_POST['Cancel']) && (isset($_SESSION['ed
 {
 	unset($_SESSION['edit_post']);
 	unset($_SESSION['reply_post']);
-	header('Location: ../HelloWorld/');
+	header('Location: ../');
 	exit;
 }
 
@@ -350,7 +353,7 @@ if (isset($_SESSION['userID']) && isset($_POST['reply_post']))
 	$userID = $_SESSION['userID'];
 	$_SESSION['reply_post'] = $_POST['reply_post'];
 	unset($_SESSION['edit_post']);
-	header('Location: ../HelloWorld/');
+	header('Location: ../');
 	exit;
 }
 
@@ -363,22 +366,22 @@ if (isset($_SESSION['userID']) && isset($_POST['reply_to_post']))
 	$current_queue_id = $_SESSION['current_queue_id'];
 
 	// We will INSERT into the post table.
-	$sql = "INSERT INTO post(user_id, PostText, reply_id, queue_id) VALUES(:user_id, :PostText, :reply_id, :queue_id)";
+	$sql = "INSERT INTO post(user_id, post_text, reply_id, queue_id) VALUES(:user_id, :post_text, :reply_id, :queue_id)";
 
 	// Now we match the keys to the values
-	$data = array("user_id" => $userID,"PostText" => $post, "reply_id" => $replyID, "queue_id" => $current_queue_id);
+	$data = array("user_id" => $userID,"post_text" => $post, "reply_id" => $replyID, "queue_id" => $current_queue_id);
 					
 	// And finally call our query function again...
 	query($DBH, $sql, $data);
 	unset($_SESSION['reply_post']);
-	header('Location: ../HelloWorld/');
+	header('Location: ../');
 	exit;
 }
 
 //SETTINGS BUTTON
 if (isset($_POST['settings']) && isset($_SESSION['userID']))
 {
-	header('Location: ../HelloWorld/settings.php');
+	header('Location: ../settings.php');
 	exit;
 }
 
@@ -386,7 +389,7 @@ if (isset($_POST['settings']) && isset($_SESSION['userID']))
 if(isset($_POST['selectedQueue']) && isset($_SESSION['userID']))
 {
 	$_SESSION['current_queue_id'] = $_POST['selectedQueue'];
-	header('Location: ../HelloWorld/');
+	header('Location: ../');
 	exit;
 }
 
@@ -423,7 +426,7 @@ if (isset($_SESSION['userID']) && isset($_POST['create_queue']) && isset($_POST[
 			
 			
 			$_SESSION['current_queue_id'] = $lastID;
-			header('Location: ../HelloWorld/');
+			header('Location: ../');
 			exit;
 		}
 		else
@@ -436,7 +439,7 @@ if (isset($_SESSION['userID']) && isset($_POST['create_queue']) && isset($_POST[
 		{
 			debug('$queueErrorMessage',$queueErrorMessage);
 			$_SESSION['queueErrorMessage'] = $queueErrorMessage;
-			header('Location: ../HelloWorld/settings.php'); 
+			header('Location: ../settings.php'); 
 			exit;
 		}
 	}
@@ -444,7 +447,7 @@ if (isset($_SESSION['userID']) && isset($_POST['create_queue']) && isset($_POST[
 //BACK BUTTON
 if (isset($_POST['back']) && isset($_SESSION['userID']))
 {
-		header('Location: ../HelloWorld/');
+		header('Location: ../');
 		exit;
 	}
 	
@@ -463,7 +466,7 @@ if (isset($_SESSION['userID']) && isset($_POST['generate_code']))
 		
 		$_SESSION['queueNameAttributeValue'] = 'value="'.$_POST['queue_name'].'"';
 		$_SESSION['queueCodeAttributeValue'] ='value="'.$randomCode.'"';
-		header('Location: ../HelloWorld/settings.php');
+		header('Location: ../settings.php');
 		exit;
 	}
 
@@ -488,7 +491,7 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 	{
 		debug('$queueErrorMessage',$queueErrorMessage);
 		$_SESSION['queueErrorMessage'] = $queueErrorMessage;
-		header('Location: ../HelloWorld/settings.php'); 
+		header('Location: ../settings.php'); 
 		exit;
 	}
 }
@@ -582,6 +585,7 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 					echo "<div class='warningDiv'><span class='textWarning'>{$_SESSION['errorMessage']}</span></div>".PHP_EOL;
 					unset($_SESSION['errorMessage']);
 				}
+
 				echo "<div id='postDiv'>".PHP_EOL;
 				echo	"<table class='table tablePosts'>".PHP_EOL;
 				echo		"<tr>".PHP_EOL;
@@ -609,33 +613,33 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 						echo "<td>$pDate</td>".PHP_EOL;
 						$pPoster = h($post['screen_name']);
 						echo "<td>$pPoster</td>".PHP_EOL;
-						$postText = h($post['PostText']);
+						$post_text = h($post['post_text']);
 						$posterID = $post['user_id'];
 						$postID = $post['id'];
 						$replyID = $post['reply_id'];
-						$postTextButtons = "";
-						$postTextButtons.= "<br>";
-						$postTextButtons.= "<form action='' method='POST'>".PHP_EOL;
+						$post_textButtons = "";
+						$post_textButtons.= "<br>";
+						$post_textButtons.= "<form action='' method='POST'>".PHP_EOL;
 						if($postID == $replyID && hasPerm($QUEUE_PRIVILEGE['reply_both']['value'], $currentPrivilege))
 						{
 							if (hasPerm($QUEUE_PRIVILEGE['delete_own']['value'], $currentPrivilege))
 							{
-								$postTextButtons.= "<button name='reply_post' class='button buttonReply'";
-								$postTextButtons.= " value='$postID'>Reply</button>";
+								$post_textButtons.= "<button name='reply_post' class='button buttonReply'";
+								$post_textButtons.= " value='$postID'>Reply</button>";
 							}
 						}
 						if ($posterID == $_SESSION['userID'] && hasPerm($QUEUE_PRIVILEGE['delete_own']['value'], $currentPrivilege))
 						{
-							$postTextButtons.= "<button name='delete_post' class='button button6'";
-							$postTextButtons.= " value='$postID'>Delete</button>";
+							$post_textButtons.= "<button name='delete_post' class='button button6'";
+							$post_textButtons.= " value='$postID'>Delete</button>";
 						}
 						if ($posterID == $_SESSION['userID'] && hasPerm($QUEUE_PRIVILEGE['edit_own']['value'], $currentPrivilege))
 						{
-							$postTextButtons.= "<button name='edit_post' class='button button6'";
-							$postTextButtons.= " value='$postID'>Edit</button>".PHP_EOL;
+							$post_textButtons.= "<button name='edit_post' class='button button6'";
+							$post_textButtons.= " value='$postID'>Edit</button>".PHP_EOL;
 						}
-						$postTextButtons.= "</form>".PHP_EOL;
-				 		echo "<td>".wordwrap($postText, 50, "<br>").$postTextButtons."</td>".PHP_EOL;
+						$post_textButtons.= "</form>".PHP_EOL;
+				 		echo "<td>".wordwrap($post_text, 50, "<br>").$post_textButtons."</td>".PHP_EOL;
 
 					echo "</tr>".PHP_EOL;
 				}
@@ -662,7 +666,7 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 				{
 					if (($postID == $post['id']) && ($_SESSION['userID'] == $post['user_id']))
 					{
-						$value = h($post['PostText']);
+						$value = h($post['post_text']);
 					}
 				}
 				$cancel_button = "<button name='Cancel' class='button button5' style='vertical-align:middle'>Cancel</button>";

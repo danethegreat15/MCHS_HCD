@@ -84,10 +84,9 @@
 			 * Then the group needs to research how to keep the dababase
 			 * in sync with the Master
 			*/
-			$database = 'mysql:dbname=hello;host=localhost';
-			$dbUSer = 'hello';
+			$database = 'mysql:dbname=qsource;host=localhost';
+			$dbUSer = 'qsourceadmin';
 			$dbPassword = '0ff$pr!nG';
-		/*	$dbPassword = 'the quik brown fox jumps over the lazy dog';*/
 
 			$DBH = new PDO($database, $dbUSer, $dbPassword);
 			

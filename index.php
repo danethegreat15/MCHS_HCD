@@ -1,13 +1,13 @@
 <?php
 require_once("myFunctions.php");
 
-session_name("helloWorldSession");
+session_name("mchs_hcd_2017Session");
 session_start();
 
 if (isset($_POST['logout']))
 {
 	session_destroy();
-	header('Location: ../HelloWorld/login.php');
+	header('Location: ../mchs_hcd_2017/login.php');
 	exit;
 	//TEST
 	//DID THIS WORK?
@@ -75,7 +75,7 @@ if (isset($_SESSION['userID']) && isset($_POST['post']))
 	$data = array();
 	query($DBH, $sql, $data);
 	
-	header('Location: ../HelloWorld/');
+	header('Location: ../mchs_hcd_2017/');
 	exit;
 }
 
@@ -94,7 +94,7 @@ if(isset($_SESSION['userID']) && isset($_POST["screen_name"]) && isset($_POST["t
 				
 	// And finally call our query function again...
 	query($DBH, $sql, $data);
-	header('Location: ../HelloWorld/');
+	header('Location: ../mchs_hcd_2017/');
 	exit;
 }
 
@@ -159,7 +159,7 @@ if(isset($_POST['register']) && isset($_POST['password']) && isset($_POST['passw
 	{
 		debug('$loginProblem',$loginProblem);
 		$_SESSION['loginProblem'] = $loginProblem;
-		header('Location: ../HelloWorld/register.php');
+		header('Location: ../mchs_hcd_2017/register.php');
 		exit;
 			
 	}
@@ -211,7 +211,7 @@ if((isset($_POST['login']) || isset($_POST['register'])) && isset($_POST['passwo
 	{
 		debug('$loginProblem',$loginProblem);
 		$_SESSION['loginProblem'] = $loginProblem;
-		header('Location: ../HelloWorld/login.php'); 
+		header('Location: ../mchs_hcd_2017/login.php'); 
 		exit;
 	}
 }
@@ -235,7 +235,7 @@ else
 	else
 	{ // If no previous userRecord is set then redirect to login page
 		session_destroy();
-		header('Location: ../HelloWorld/login.php');
+		header('Location: ../mchs_hcd_2017/login.php');
 		exit;
 	}
 }
@@ -265,7 +265,7 @@ if(isset($_POST['delete_post']) && isset($_SESSION['userID']))
 		// And finally call our query function again...
 		query($DBH, $sql, $data);
 		unset($_SESSION['edit_post']);
-		header('Location: ../HelloWorld/');
+		header('Location: ../mchs_hcd_2017/');
 		exit;
 	}
 	else
@@ -277,7 +277,7 @@ if(isset($_POST['delete_post']) && isset($_SESSION['userID']))
 	{
 		debug('$errorMessage',$errorMessage);
 		$_SESSION['errorMessage'] = $errorMessage;
-		header('Location: ../HelloWorld/'); 
+		header('Location: ../mchs_hcd_2017/'); 
 		exit;
 	}
 }
@@ -301,7 +301,7 @@ if (isset($_SESSION['userID']) && isset($_POST['edit_post']))
 	{
 		$_SESSION['edit_post'] = $_POST['edit_post'];
 		unset($_SESSION['reply_post']);
-		header('Location: ../HelloWorld/');
+		header('Location: ../mchs_hcd_2017/');
 		exit;
 	}
 	else
@@ -313,7 +313,7 @@ if (isset($_SESSION['userID']) && isset($_POST['edit_post']))
 	{
 		debug('$errorMessage',$errorMessage);
 		$_SESSION['errorMessage'] = $errorMessage;
-		header('Location: ../HelloWorld/'); 
+		header('Location: ../mchs_hcd_2017/'); 
 		exit;
 	}
 }
@@ -330,7 +330,7 @@ if(isset($_POST['edited_post']) && isset($_SESSION['userID']) && isset($_SESSION
 	// And finally call our query function again...
 	query($DBH, $sql, $data);
 	unset($_SESSION['edit_post']);
-	header('Location: ../HelloWorld/');
+	header('Location: ../mchs_hcd_2017/');
 	exit;
 }
 
@@ -339,7 +339,7 @@ if(isset($_SESSION['userID']) && isset($_POST['Cancel']) && (isset($_SESSION['ed
 {
 	unset($_SESSION['edit_post']);
 	unset($_SESSION['reply_post']);
-	header('Location: ../HelloWorld/');
+	header('Location: ../mchs_hcd_2017/');
 	exit;
 }
 
@@ -350,7 +350,7 @@ if (isset($_SESSION['userID']) && isset($_POST['reply_post']))
 	$userID = $_SESSION['userID'];
 	$_SESSION['reply_post'] = $_POST['reply_post'];
 	unset($_SESSION['edit_post']);
-	header('Location: ../HelloWorld/');
+	header('Location: ../mchs_hcd_2017/');
 	exit;
 }
 
@@ -371,14 +371,14 @@ if (isset($_SESSION['userID']) && isset($_POST['reply_to_post']))
 	// And finally call our query function again...
 	query($DBH, $sql, $data);
 	unset($_SESSION['reply_post']);
-	header('Location: ../HelloWorld/');
+	header('Location: ../mchs_hcd_2017/');
 	exit;
 }
 
 //SETTINGS BUTTON
 if (isset($_POST['settings']) && isset($_SESSION['userID']))
 {
-	header('Location: ../HelloWorld/settings.php');
+	header('Location: ../mchs_hcd_2017/settings.php');
 	exit;
 }
 
@@ -386,7 +386,7 @@ if (isset($_POST['settings']) && isset($_SESSION['userID']))
 if(isset($_POST['selectedQueue']) && isset($_SESSION['userID']))
 {
 	$_SESSION['current_queue_id'] = $_POST['selectedQueue'];
-	header('Location: ../HelloWorld/');
+	header('Location: ../mchs_hcd_2017/');
 	exit;
 }
 
@@ -423,7 +423,7 @@ if (isset($_SESSION['userID']) && isset($_POST['create_queue']) && isset($_POST[
 			
 			
 			$_SESSION['current_queue_id'] = $lastID;
-			header('Location: ../HelloWorld/');
+			header('Location: ../mchs_hcd_2017/');
 			exit;
 		}
 		else
@@ -436,7 +436,7 @@ if (isset($_SESSION['userID']) && isset($_POST['create_queue']) && isset($_POST[
 		{
 			debug('$queueErrorMessage',$queueErrorMessage);
 			$_SESSION['queueErrorMessage'] = $queueErrorMessage;
-			header('Location: ../HelloWorld/settings.php'); 
+			header('Location: ../mchs_hcd_2017/settings.php'); 
 			exit;
 		}
 	}
@@ -444,7 +444,7 @@ if (isset($_SESSION['userID']) && isset($_POST['create_queue']) && isset($_POST[
 //BACK BUTTON
 if (isset($_POST['back']) && isset($_SESSION['userID']))
 {
-		header('Location: ../HelloWorld/');
+		header('Location: ../mchs_hcd_2017/');
 		exit;
 	}
 	
@@ -463,7 +463,7 @@ if (isset($_SESSION['userID']) && isset($_POST['generate_code']))
 		
 		$_SESSION['queueNameAttributeValue'] = 'value="'.$_POST['queue_name'].'"';
 		$_SESSION['queueCodeAttributeValue'] ='value="'.$randomCode.'"';
-		header('Location: ../HelloWorld/settings.php');
+		header('Location: ../mchs_hcd_2017/settings.php');
 		exit;
 	}
 
@@ -488,7 +488,7 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 	{
 		debug('$queueErrorMessage',$queueErrorMessage);
 		$_SESSION['queueErrorMessage'] = $queueErrorMessage;
-		header('Location: ../HelloWorld/settings.php'); 
+		header('Location: ../mchs_hcd_2017/settings.php'); 
 		exit;
 	}
 }

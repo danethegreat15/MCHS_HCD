@@ -84,7 +84,7 @@
 			 * Then the group needs to research how to keep the dababase
 			 * in sync with the Master
 			*/
-			$database = 'mysql:dbname=hello;host=localhost';
+			$database = 'mysql:dbname=qsource;host=localhost';
 			$dbUSer = 'qsourceadmin';
 			$dbPassword = '0ff$pr!nG';
 		/*	$dbPassword = 'the quik brown fox jumps over the lazy dog';*/

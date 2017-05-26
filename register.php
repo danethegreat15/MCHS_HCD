@@ -1,6 +1,7 @@
 <?php
 	require_once("myFunctions.php");
 	session_name("qSourceSession");
+
 	session_start();
 	// ***************** Debugging Stuff *************************
 	$DEBUG = getDebugState();
@@ -39,7 +40,9 @@
 ?>
 	<br>
 	<fieldset class='center'>
+
 		<form action="../" method="POST">
+
 			
 				<input type="hidden" name="register" value="register">
 				Email:

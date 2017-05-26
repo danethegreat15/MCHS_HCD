@@ -1,6 +1,7 @@
 <?php
 	require_once("myFunctions.php");
 	session_name("qSourceSession");
+
 	session_start();
 	// ***************** Debugging Stuff *************************
 	$DEBUG = getDebugState();
@@ -71,7 +72,9 @@
 	}
 	?>
     <fieldset><legend>Settings</legend>
+
     <form action="../" method="POST">
+
     	Username: 
 		<br>
 		<input type="text" name="screen_name" value= <?php echo "'$screen_name'" ?>> 
@@ -100,7 +103,9 @@
     </fieldset>
     <br>
     <fieldset><legend>Create A Queue</legend>
+
     <form action="../" method="POST">
+
     	Queue Name: 
 		<br>
 		<input type="text" name="queue_name" <?php echo $queueNameAttributeValue;?>> 
@@ -115,7 +120,9 @@
     </fieldset>
 	 <br>
     <fieldset><legend>Join A Queue</legend>
+
     <form action="../" method="POST">
+
   		Join Code:
   		<br>
   		<input name="join_queue_name" <?php echo $queueCodeAttributeValue;?>>
@@ -125,6 +132,7 @@
     </fieldset>
 </center>
 	<form action="../" method="POST"> <button name="back" value="back" class="button buttonBack" style="vertical-align:middle">Back</button></form>
+
 </font>
 </body>
 </html>

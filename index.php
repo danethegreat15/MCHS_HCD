@@ -74,6 +74,7 @@ if (isset($_SESSION['userID']) && isset($_POST['post']))
 	$sql = "UPDATE post SET reply_id = $lastID WHERE id = $lastID";
 	$data = array();
 	query($DBH, $sql, $data);
+
 	header('Location: ../');
 	exit;
 }
@@ -268,7 +269,9 @@ if(isset($_POST['delete_post']) && isset($_SESSION['userID']))
 		// And finally call our query function again...
 		query($DBH, $sql, $data);
 		unset($_SESSION['edit_post']);
+
 		header('Location: ../');
+
 		exit;
 	}
 	else
@@ -389,7 +392,9 @@ if (isset($_POST['settings']) && isset($_SESSION['userID']))
 if(isset($_POST['selectedQueue']) && isset($_SESSION['userID']))
 {
 	$_SESSION['current_queue_id'] = $_POST['selectedQueue'];
+
 	header('Location: ../');
+
 	exit;
 }
 
@@ -440,6 +445,7 @@ if (isset($_SESSION['userID']) && isset($_POST['create_queue']) && isset($_POST[
 			debug('$queueErrorMessage',$queueErrorMessage);
 			$_SESSION['queueErrorMessage'] = $queueErrorMessage;
 			header('Location: ../settings.php'); 
+
 			exit;
 		}
 	}
@@ -492,6 +498,7 @@ if(isset($_POST['join_queue']) && isset($_POST['join_queue_name']) && isset($_SE
 		debug('$queueErrorMessage',$queueErrorMessage);
 		$_SESSION['queueErrorMessage'] = $queueErrorMessage;
 		header('Location: ../settings.php'); 
+
 		exit;
 	}
 }

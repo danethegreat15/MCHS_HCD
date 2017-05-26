@@ -85,7 +85,7 @@
 			 * in sync with the Master
 			*/
 			$database = 'mysql:dbname=hello;host=localhost';
-			$dbUSer = 'hello';
+			$dbUSer = 'qsourceadmin';
 			$dbPassword = '0ff$pr!nG';
 		/*	$dbPassword = 'the quik brown fox jumps over the lazy dog';*/
 

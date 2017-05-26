@@ -87,7 +87,6 @@
 			$database = 'mysql:dbname=qsource;host=localhost';
 			$dbUSer = 'qsourceadmin';
 			$dbPassword = '0ff$pr!nG';
-		/*	$dbPassword = 'the quik brown fox jumps over the lazy dog';*/
 
 			$DBH = new PDO($database, $dbUSer, $dbPassword);
 			
